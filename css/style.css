@@ -9,7 +9,40 @@ html {
 body {
     background: url(../assets/img/background.jpg) no-repeat top;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
 }
+
+/*main style start*/
+
+.main__container {
+    background-color: #dddddd;
+    max-width: 80vw;
+    width: max-content;
+    max-height: 70vh;
+    padding: 50px;
+    margin: 5vh auto;
+    border-radius: 20px;
+}
+
+.playground {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 70vw;
+    min-height: 70vh;
+}
+.icon {
+    min-width: 50px;
+    min-height: 50px;
+    background: url(../assets/img/the-avengers.jpg) no-repeat center;
+    background-size: cover;
+    cursor: pointer;
+    margin: 10px;
+}
+
+/*main style end*/
 
 /*footer style start*/
 
