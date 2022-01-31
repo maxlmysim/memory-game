@@ -34,11 +34,17 @@ body {
 }
 
 /*header style start*/
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
 
 .main-title {
     font-size: 5vh;
     color: #ffffff;
-    padding-left: 5vw;
 }
 
 /*header style end*/
@@ -46,6 +52,7 @@ body {
 /*main style start*/
 
 .main__container {
+    position: relative;
     background-color: #dddddd;
     max-width: max-content;
     max-height: max-content;
@@ -56,17 +63,64 @@ body {
 
 .playground {
     display: flex;
+    margin-top: 20px;
     flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+.container-setting {
+    position: absolute;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-content: space-between;
+    top: 15px;
+}
+
+.btn-setting {
+}
+
+.current-score {
+
 }
 
 .icon {
     cursor: pointer;
+    display: none;
 }
 
 .icon:hover {
     box-shadow: 0 0 10px black;
+}
+
+.new-game-btn {
+}
+
+.setting-menu {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    background-color: #9f9c9c;
+    padding: 5%;
+    border-radius: 10%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.tittle-choose {
+    padding-bottom: 5%;
+    font-size: 20px;
+}
+
+.choose-param-container {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.choose-param-title {
+    font-size: 16px;
 }
 
 /*main style end*/

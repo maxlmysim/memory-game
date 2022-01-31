@@ -23,12 +23,14 @@ function createPlayground() {
         quantity++;
     }
 
+    document.querySelector('.container-setting').style.width = playground.clientWidth+ 'px';
+
     createGame();
 }
 
 function getSizeIcon() {
     let icon = [];
-    let sizePlayGround = Math.min(document.documentElement.clientWidth * 0.75, document.documentElement.clientHeight * 0.75);
+    let sizePlayGround = Math.min(document.documentElement.clientWidth * 0.7, document.documentElement.clientHeight * 0.7);
 
     playground.style.width = sizePlayGround + 'px';
     playground.style.height = sizePlayGround + 'px';
@@ -60,6 +62,9 @@ function createGame() {
 
 function checkCouple(event) {
     let hero = event.target.dataset.hero;
+
+    currentScore++
+    document.querySelector('.current-score').textContent = `Score: ${currentScore}`;
 
     event.target.style.animation = `rotateY2 ${animationDuration}s linear`;
     listCheckCouple.push(event.target);
@@ -100,11 +105,22 @@ function checkEndGame() {
 
 }
 
+function newGame() {
+    let checkList = Array.from(document.querySelectorAll('.icon'));
+    checkList.forEach((item) => item.remove());
+    createPlayground()
+    currentScore = 0;
+    document.querySelector('.current-score').textContent = `Score: ${currentScore}`;
+}
+
 const playground = document.querySelector('.playground');
-let numberIcons = 4;
+let numberIcons = 16;
 let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four', 'batman', 'superman', 'flash', 'green-arrow', 'aquaman', 'green-lantern'];
 let animationDuration = 0.2;
 let listCheckCouple = [];
+let currentScore = 0;
+let newGameBtn = document.querySelector('.btn-new-game')
+let settingsBtn = document.querySelector('.btn-setting');
 
 preloadImages();
 createPlayground();
@@ -115,6 +131,10 @@ playground.addEventListener('click', function (event) {
         }
     },
 );
+
+newGameBtn.addEventListener('click', newGame)
+let settingsMenu = document.createElement('div')
+
 
 
 
