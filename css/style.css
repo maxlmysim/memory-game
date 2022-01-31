@@ -86,7 +86,7 @@ body {
 
 .icon {
     cursor: pointer;
-    display: none;
+    /*display: none;*/
 }
 
 .icon:hover {
