@@ -76,6 +76,7 @@ function checkCouple(event) {
             listCheckCouple[0].dataset.isOpen = 'true';
             listCheckCouple[1].dataset.isOpen = 'true';
             listCheckCouple.length = 0;
+            checkEndGame();
             return;
         }
 
@@ -86,11 +87,21 @@ function checkCouple(event) {
         }, animationDuration * 1000 * 2 + 500);
     }
 
+}
+
+function checkEndGame() {
+    let checkList = Array.from(document.querySelectorAll('.icon'));
+    let isEndGame = checkList.every(item => item.dataset.isOpen === 'true');
+    setTimeout(() => {
+        if (isEndGame) {
+            checkList.forEach((item) => item.remove());
+        }
+    }, 1000);
 
 }
 
 const playground = document.querySelector('.playground');
-let numberIcons = 36;
+let numberIcons = 4;
 let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four', 'batman', 'superman', 'flash', 'green-arrow', 'aquaman', 'green-lantern'];
 let animationDuration = 0.2;
 let listCheckCouple = [];
