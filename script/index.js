@@ -1,3 +1,10 @@
+function preloadImages() {
+    heroes.forEach((item) => {
+        const img = new Image();
+        img.src = `./assets/img/${item}.jpg`;
+    });
+}
+
 function createPlayground() {
     let quantity = 0;
     let sizeIcon = getSizeIcon();
@@ -61,7 +68,7 @@ function checkCouple(event) {
     setTimeout(() => {
         event.target.style.animation = `rotateY1 ${animationDuration}s linear`;
         event.target.src = `./assets/img/${hero}.jpg`;
-    }, animationDuration * 955);
+    }, animationDuration * 1000);
 
     if (listCheckCouple.length > 1) {
 
@@ -87,10 +94,11 @@ let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four
 let animationDuration = 0.2;
 let listCheckCouple = [];
 
+preloadImages();
 createPlayground();
 
 playground.addEventListener('click', function (event) {
-        if (event.target.dataset.hero) {
+        if (event.target.dataset.isOpen === 'false') {
             checkCouple(event);
         }
     },
