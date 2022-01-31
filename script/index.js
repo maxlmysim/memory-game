@@ -72,8 +72,7 @@ function checkCouple(event) {
 
     if (listCheckCouple.length > 1) {
 
-        if (listCheckCouple[0].dataset.hero === listCheckCouple[1].dataset.hero) {
-
+        if (listCheckCouple[0].dataset.hero === listCheckCouple[1].dataset.hero && listCheckCouple[0] !== listCheckCouple[1]) {
             listCheckCouple[0].dataset.isOpen = 'true';
             listCheckCouple[1].dataset.isOpen = 'true';
             listCheckCouple.length = 0;
@@ -86,6 +85,8 @@ function checkCouple(event) {
             listCheckCouple.length = 0;
         }, animationDuration * 1000 * 2 + 500);
     }
+
+
 }
 
 const playground = document.querySelector('.playground');
