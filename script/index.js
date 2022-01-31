@@ -113,6 +113,14 @@ function newGame() {
     document.querySelector('.current-score').textContent = `Score: ${currentScore}`;
 }
 
+function SettingsMenu() {
+    document.querySelector('.setting-menu').classList.toggle('active')
+}
+
+function changeSettings() {
+
+}
+
 const playground = document.querySelector('.playground');
 let numberIcons = 16;
 let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four', 'batman', 'superman', 'flash', 'green-arrow', 'aquaman', 'green-lantern'];
@@ -121,6 +129,7 @@ let listCheckCouple = [];
 let currentScore = 0;
 let newGameBtn = document.querySelector('.btn-new-game')
 let settingsBtn = document.querySelector('.btn-setting');
+let applySettingsBtn = document.querySelector('.btn-apply-settings')
 
 preloadImages();
 createPlayground();
@@ -133,8 +142,8 @@ playground.addEventListener('click', function (event) {
 );
 
 newGameBtn.addEventListener('click', newGame)
-let settingsMenu = document.createElement('div')
-
+settingsBtn.addEventListener('click', SettingsMenu);
+applySettingsBtn.addEventListener('click', changeSettings);
 
 
 
