@@ -46,7 +46,7 @@ function getSizeIcon() {
 
 function createGame() {
     let icons = Array.from(document.querySelectorAll('.icon'));
-    let hero = heroes.slice(0, 5);
+    let hero = heroes.slice(0, difficulty);
 
     icons.forEach((item) => {
         item.dataset.isOpen = 'false';
@@ -132,15 +132,21 @@ function changeSettings() {
 
 function checkSetting(item) {
     if (item === 'difficulty') {
-        document.querySelectorAll(`[name=${item}]`);
+        document.querySelectorAll(`[name=${item}]`)
+            .forEach((input) => {
+                if (input.checked) {
+                    difficulty = +input.value;
+                    localStorage.setItem(item, input.id);
+                }
+            });
     }
 
     if (item === 'playground') {
         document.querySelectorAll(`[name=${item}]`)
             .forEach((input) => {
                 if (input.checked) {
-                    // numberIcons = +input.value;
-                    numberIcons = 6;
+                    numberIcons = +input.value;
+                    // numberIcons = 6;
 
                     localStorage.setItem(item, input.id);
                 }
@@ -185,6 +191,8 @@ function applySettings() {
 
 const playground = document.querySelector('.playground');
 let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four', 'batman', 'superman', 'flash', 'green-arrow', 'aquaman', 'green-lantern'];
+
+let difficulty = 4;
 let animationDuration = 0.2;
 let numberIcons = 16;
 let listCheckCouple = [];
