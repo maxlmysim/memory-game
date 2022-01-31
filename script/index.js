@@ -37,6 +37,10 @@ function createGame() {
     let icons = Array.from(document.querySelectorAll('.icon'));
     let hero = heroes.slice(0, 5);
 
+    icons.forEach((item) => {
+        item.dataset.isOpen = 'false';
+    });
+
     while (icons.length) {
         let randIcon1 = icons.splice([Math.floor(Math.random() * icons.length)], 1);
         let randIcon2 = icons.splice([Math.floor(Math.random() * icons.length)], 1);
@@ -49,31 +53,47 @@ function createGame() {
 
 function checkCouple(event) {
     let hero = event.target.dataset.hero;
-    let preOpen = document.querySelector('[data-open]');
+    // let preOpen = document.querySelector('[data-open]');
 
     event.target.style.animation = `rotateY2 ${animationDuration}s linear`;
-    event.target.dataset.open = 'true';
+    listCheckCouple.push(event.target);
+
 
     setTimeout(() => {
         event.target.style.animation = `rotateY1 ${animationDuration}s linear`;
         event.target.src = `./assets/img/${hero}.jpg`;
     }, animationDuration * 955);
 
-    console.log(preOpen);
+    if (listCheckCouple.length > 1) {
 
-    if (preOpen) {
+        if (listCheckCouple[0].dataset.hero === listCheckCouple[1].dataset.hero) {
 
-        if (preOpen.dataset.hero !== hero) {
-            setTimeout(() => {
-                event.target.src = `./assets/img/the-avengers.jpg`;
-                preOpen.src = `./assets/img/the-avengers.jpg`;
-            }, animationDuration * 2000 + 500);
-
+            listCheckCouple[0].dataset.isOpen = 'true';
+            listCheckCouple[1].dataset.isOpen = 'true';
+            listCheckCouple.length = 0;
+            return;
         }
+        setTimeout(() => {
+            listCheckCouple[0].src = `./assets/img/the-avengers.jpg`;
+            listCheckCouple[1].src = `./assets/img/the-avengers.jpg`;
+            listCheckCouple.length = 0;
+        }, animationDuration * 1000 * 2 + 500);
 
-        delete preOpen.dataset.open;
-        delete event.target.dataset.open;
+
     }
+    // if (preOpen) {
+    //
+    //     if (preOpen.dataset.hero !== hero) {
+    //         setTimeout(() => {
+    //             event.target.src = `./assets/img/the-avengers.jpg`;
+    //             preOpen.src = `./assets/img/the-avengers.jpg`;
+    //         }, animationDuration * 2000 + 500);
+    //
+    //     }
+    //
+    //     delete preOpen.dataset.open;
+    //     delete event.target.dataset.open;
+    // }
 
 }
 
@@ -81,6 +101,7 @@ const playground = document.querySelector('.playground');
 let numberIcons = 36;
 let heroes = ['captain-america', 'ironman', 'spiderman', 'thor', 'fantastic-four', 'batman', 'superman', 'flash', 'green-arrow', 'aquaman', 'green-lantern'];
 let animationDuration = 0.2;
+let listCheckCouple = [];
 
 createPlayground();
 
