@@ -184,6 +184,18 @@ function loadLocalStorage() {
     }
 }
 
+function updateBestScore() {
+    let scoreList = Array.from(document.querySelectorAll('.positionScore'));
+
+    document.querySelector('.table-score').classList.add('active');
+    SettingsMenu()
+
+    scoreList.forEach((item, index) => {
+        item.textContent = bestScore[index];
+    });
+
+}
+
 function applySettings() {
     changeSettings();
     newGame();
@@ -197,10 +209,13 @@ let animationDuration = 0.2;
 let numberIcons = 16;
 let listCheckCouple = [];
 let currentScore = 0;
+let bestScore = [];
+
+let btnBestScore = document.querySelector('.btn-best-scores');
 let newGameBtn = document.querySelector('.btn-new-game');
 let settingsBtn = document.querySelector('.btn-setting');
 let applySettingsBtn = document.querySelector('.btn-apply-settings');
-let bestScore = [];
+let btnCloseBestScore = document.querySelector('.btn-close-best-score')
 
 preloadImages();
 createPlayground();
@@ -212,7 +227,12 @@ playground.addEventListener('click', function (event) {
     },
 );
 
+btnBestScore.addEventListener('click', updateBestScore);
 newGameBtn.addEventListener('click', newGame);
 settingsBtn.addEventListener('click', SettingsMenu);
 applySettingsBtn.addEventListener('click', applySettings);
+
+btnCloseBestScore.addEventListener('click', function (){
+    document.querySelector('.table-score').classList.remove('active');
+})
 
