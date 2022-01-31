@@ -53,7 +53,6 @@ function createGame() {
 
 function checkCouple(event) {
     let hero = event.target.dataset.hero;
-    // let preOpen = document.querySelector('[data-open]');
 
     event.target.style.animation = `rotateY2 ${animationDuration}s linear`;
     listCheckCouple.push(event.target);
@@ -73,28 +72,13 @@ function checkCouple(event) {
             listCheckCouple.length = 0;
             return;
         }
+
         setTimeout(() => {
             listCheckCouple[0].src = `./assets/img/the-avengers.jpg`;
             listCheckCouple[1].src = `./assets/img/the-avengers.jpg`;
             listCheckCouple.length = 0;
         }, animationDuration * 1000 * 2 + 500);
-
-
     }
-    // if (preOpen) {
-    //
-    //     if (preOpen.dataset.hero !== hero) {
-    //         setTimeout(() => {
-    //             event.target.src = `./assets/img/the-avengers.jpg`;
-    //             preOpen.src = `./assets/img/the-avengers.jpg`;
-    //         }, animationDuration * 2000 + 500);
-    //
-    //     }
-    //
-    //     delete preOpen.dataset.open;
-    //     delete event.target.dataset.open;
-    // }
-
 }
 
 const playground = document.querySelector('.playground');
