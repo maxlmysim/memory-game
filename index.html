@@ -15,6 +15,14 @@
 </header>
 <main class="main">
     <div class="main__container">
+        <div class="end-game">
+            <h2 class="end-game__title">You win!</h2>
+            <h3 class="end-game__score"></h3>
+            <div class="end-game__btn-container">
+                <button class="btn-best-scores">Best Score</button>
+                <button class="btn-new-game">New Game</button>
+            </div>
+        </div>
         <div class="table-score">
             <ul>
                 <li class="position">1: <span class="positionScore"></span></li>
@@ -69,15 +77,15 @@
                 <p class="tittle-choose ">Animation speed</p>
                 <div class="choose-param-container">
                     <div>
-                        <input type="radio" name="anim-speed" value="0.4" id="anim-speed1">
+                        <input type="radio" name="anim-speed" value="0.8" id="anim-speed1">
                         <label for="anim-speed1" class="choose-param-title">Slow</label>
                     </div>
                     <div>
-                        <input type="radio" name="anim-speed" value="0.2" id="anim-speed2">
+                        <input type="radio" name="anim-speed" value="0.5" id="anim-speed2">
                         <label for="anim-speed2" class="choose-param-title">Medium</label>
                     </div>
                     <div>
-                        <input type="radio" name="anim-speed" value="0.05" id="anim-speed3" checked>
+                        <input type="radio" name="anim-speed" value="0.3" id="anim-speed3" checked>
                         <label for="anim-speed3" class="choose-param-title">Quick</label>
                     </div>
                 </div>
@@ -87,10 +95,9 @@
                 <button class="btn-apply-settings">Apply</button>
             </div>
         </div>
-
         <div class="playground">
             <div class="container-setting">
-                <p class="current-score">Score:</p>
+                <p class="current-score">Score: 0</p>
                 <button class="btn-new-game">New Game</button>
                 <button class="btn-setting">Settings</button>
             </div>

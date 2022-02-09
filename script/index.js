@@ -13,14 +13,23 @@ function createPlayground() {
     let sizeIcon = getSizeIcon();
 
     while (quantity < numberIcons) {
+        let card = document.createElement('div');
+        let shirt = document.createElement('img');
         let icon = document.createElement('img');
-        icon.src = './assets/img/the-avengers.jpg';
-        icon.style.width = sizeIcon.width + 'px';
-        icon.style.height = sizeIcon.height + 'px';
-        playground.style.gap = sizeIcon.gap + 'px';
+
+        card.style.width = sizeIcon.width + 'px';
+        card.style.height = sizeIcon.height + 'px';
+        card.className = 'card';
+
+        shirt.src = './assets/img/the-avengers.jpg';
+        shirt.className = 'shirt';
+
         icon.className = 'icon';
 
-        playground.append(icon);
+        playground.style.gap = sizeIcon.gap + 'px';
+
+        card.append(shirt, icon);
+        playground.append(card);
 
         quantity++;
     }
@@ -37,8 +46,7 @@ function getSizeIcon() {
     playground.style.width = sizePlayGround + 'px';
     playground.style.height = sizePlayGround + 'px';
 
-    icon.width = sizePlayGround / (Math.sqrt(numberIcons) + 1);
-    icon.height = icon.width;
+    icon.height = icon.width = sizePlayGround / (Math.sqrt(numberIcons) + 1);
     icon.gap = (sizePlayGround - (icon.width * Math.sqrt(numberIcons))) / (Math.sqrt(numberIcons) + 1);
 
     return icon;
@@ -59,41 +67,44 @@ function createGame() {
 
         randIcon1[0].dataset.hero = heroes[randHeroNum];
         randIcon2[0].dataset.hero = heroes[randHeroNum];
+        randIcon1[0].src = `./assets/img/${heroes[randHeroNum]}.jpg`;
+        randIcon2[0].src = `./assets/img/${heroes[randHeroNum]}.jpg`;
     }
 }
 
 function checkCouple(event) {
-    let hero = event.target.dataset.hero;
+    let selectedCard = event.path.find(item => {
+        if (item.classList.contains('card')) return true;
+    });
+    let hero = Array.from(selectedCard.children).find(item => item.classList.contains('icon'));
 
     currentScore++;
     document.querySelector('.current-score').textContent = `Score: ${currentScore}`;
 
-    event.target.style.animation = `rotateY2 ${animationDuration}s linear`;
-    listCheckCouple.push(event.target);
+    selectedCard.classList.add('flip');
+    selectedCard.style.transition = animationDuration + 's';
 
-
-    setTimeout(() => {
-        event.target.style.animation = `rotateY1 ${animationDuration}s linear`;
-        event.target.src = `./assets/img/${hero}.jpg`;
-    }, animationDuration * 1000);
+    listCheckCouple.push(hero);
 
     if (listCheckCouple.length > 1) {
-
+        isCheckCouple = true;
         if (listCheckCouple[0].dataset.hero === listCheckCouple[1].dataset.hero && listCheckCouple[0] !== listCheckCouple[1]) {
             listCheckCouple[0].dataset.isOpen = 'true';
             listCheckCouple[1].dataset.isOpen = 'true';
+
             listCheckCouple.length = 0;
             checkEndGame();
+            isCheckCouple = false;
             return;
         }
 
         setTimeout(() => {
-            listCheckCouple[0].src = `./assets/img/the-avengers.jpg`;
-            listCheckCouple[1].src = `./assets/img/the-avengers.jpg`;
+            isCheckCouple = false;
+            listCheckCouple[0].parentElement.classList.remove('flip');
+            listCheckCouple[1].parentElement.classList.remove('flip');
             listCheckCouple.length = 0;
-        }, animationDuration * 1000 * 2 + 500);
+        }, animationDuration * 2500);
     }
-
 }
 
 function checkEndGame() {
@@ -101,17 +112,21 @@ function checkEndGame() {
     let isEndGame = checkList.every(item => item.dataset.isOpen === 'true');
 
     if (isEndGame) {
+        document.querySelector('.end-game').classList.add('active');
+        document.querySelector('.end-game__score').textContent = 'Your score: ' + currentScore;
+
+        if (bestScore.includes(currentScore)) return;
         bestScore.push(currentScore);
         bestScore.sort((a, b) => a - b)
             .splice(9, 1);
         localStorage.setItem('bestScore', bestScore);
     }
-
-
 }
 
 function newGame() {
-    let checkList = Array.from(document.querySelectorAll('.icon'));
+    document.querySelector('.end-game').classList.remove('active');
+
+    let checkList = Array.from(document.querySelectorAll('.card'));
     checkList.forEach((item) => item.remove());
     createPlayground();
     currentScore = 0;
@@ -146,8 +161,6 @@ function checkSetting(item) {
             .forEach((input) => {
                 if (input.checked) {
                     numberIcons = +input.value;
-                    // numberIcons = 6;
-
                     localStorage.setItem(item, input.id);
                 }
             });
@@ -188,7 +201,7 @@ function updateBestScore() {
     let scoreList = Array.from(document.querySelectorAll('.positionScore'));
 
     document.querySelector('.table-score').classList.add('active');
-    SettingsMenu()
+    document.querySelector('.setting-menu').classList.remove('active');
 
     scoreList.forEach((item, index) => {
         item.textContent = bestScore[index];
@@ -210,29 +223,30 @@ let numberIcons = 16;
 let listCheckCouple = [];
 let currentScore = 0;
 let bestScore = [];
+let isCheckCouple = false;
 
-let btnBestScore = document.querySelector('.btn-best-scores');
-let newGameBtn = document.querySelector('.btn-new-game');
+let btnBestScore = document.querySelectorAll('.btn-best-scores');
+let newGameBtn = document.querySelectorAll('.btn-new-game');
 let settingsBtn = document.querySelector('.btn-setting');
 let applySettingsBtn = document.querySelector('.btn-apply-settings');
-let btnCloseBestScore = document.querySelector('.btn-close-best-score')
+let btnCloseBestScore = document.querySelector('.btn-close-best-score');
 
 preloadImages();
 createPlayground();
 
 playground.addEventListener('click', function (event) {
-        if (event.target.dataset.isOpen === 'false') {
+        if (isCheckCouple) return;
+        if (event.target.classList.contains('shirt')) {
             checkCouple(event);
         }
     },
 );
 
-btnBestScore.addEventListener('click', updateBestScore);
-newGameBtn.addEventListener('click', newGame);
+btnBestScore.forEach(btn => btn.addEventListener('click', updateBestScore));
+newGameBtn.forEach(btn => btn.addEventListener('click', newGame));
 settingsBtn.addEventListener('click', SettingsMenu);
 applySettingsBtn.addEventListener('click', applySettings);
-
-btnCloseBestScore.addEventListener('click', function (){
+btnCloseBestScore.addEventListener('click', function () {
     document.querySelector('.table-score').classList.remove('active');
-})
+});
 
